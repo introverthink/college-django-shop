@@ -1,4 +1,3 @@
-# shop/forms.py
 from django import forms
 
 class CheckoutForm(forms.Form):
