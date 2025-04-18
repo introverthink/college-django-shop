@@ -1,0 +1,60 @@
+<!-- shop/templates/shop/checkout.html -->
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Оформление заказа</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                Ваши данные
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'place_order' %}">
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.errors %}
+                        <div class="text-danger">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-primary">Подтвердить заказ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Ваш заказ
+            </div>
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    {% for item in cart_items %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">{{ item.product.name }}</h6>
+                            <small class="text-muted">{{ item.quantity }} x {{ item.product.price }} ₽</small>
+                        </div>
+                        <span class="text-muted">{{ item.get_total_price }} ₽</span>
+                    </li>
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Итого</span>
+                        <strong>{{ total }} ₽</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
