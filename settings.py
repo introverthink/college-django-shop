@@ -1,5 +1,3 @@
-# shop_project/settings.py (добавить в существующий файл)
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
